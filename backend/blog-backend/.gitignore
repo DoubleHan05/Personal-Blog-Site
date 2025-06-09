@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+# 忽略目录
+important/     # 忽略重要文件目录
