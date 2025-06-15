@@ -1,13 +1,23 @@
 package com.example.blog.entity;
 
-import lombok.*;
-import jakarta.persistence.*;
 import java.util.Date;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 /**
- * 用户实体类，映射数据库中的 users 表
- * 使用 JPA 注解定义实体与表的映射关系
- * 使用 Lombok 注解简化代码
+ * 用户实体类，映射数据库中的 users 表 使用 JPA 注解定义实体与表的映射关系 使用 Lombok 注解简化代码
  */
 @Entity
 @Table(name = "users")
@@ -57,16 +67,16 @@ public class User {
     private String bio;
 
     /**
-     * 用户状态，是否活跃，默认为 true
-     * 使用 TINYINT(1) 类型存储布尔值
+     * 用户状态，是否活跃，默认为 true 使用 TINYINT(1) 类型存储布尔值
      */
+    @Builder.Default
     @Column(columnDefinition = "TINYINT(1) DEFAULT 1")
     private Boolean isActive = true;
 
     /**
-     * 用户权限，是否为管理员，默认为 false
-     * 使用 TINYINT(1) 类型存储布尔值
+     * 用户权限，是否为管理员，默认为 false 使用 TINYINT(1) 类型存储布尔值
      */
+    @Builder.Default
     @Column(columnDefinition = "TINYINT(1) DEFAULT 0")
     private Boolean isAdmin = false;
 
@@ -85,7 +95,14 @@ public class User {
     private Date lastLoginAt;
 
     // 以下为各字段的 getter 和 setter 方法
-    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -167,8 +184,7 @@ public class User {
     }
 
     /**
-     * JPA 生命周期回调方法
-     * 在实体创建时自动设置创建时间
+     * JPA 生命周期回调方法 在实体创建时自动设置创建时间
      */
     @PrePersist
     protected void onCreate() {
@@ -176,8 +192,7 @@ public class User {
     }
 
     /**
-     * JPA 生命周期回调方法
-     * 在实体更新时自动设置最后登录时间
+     * JPA 生命周期回调方法 在实体更新时自动设置最后登录时间
      */
     @PreUpdate
     protected void onUpdate() {
